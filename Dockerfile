@@ -1,7 +1,7 @@
 # ───────────────────────────────
 # STAGE 1: Build con Gradle
 # ───────────────────────────────
-FROM eclipse-temurin:21-jdk AS build
+FROM eclipse-temurin:17-jdk AS build
 
 WORKDIR /app
 
@@ -24,7 +24,7 @@ RUN ./gradlew --no-daemon clean build
 # ───────────────────────────────
 # STAGE 2: Imagen final
 # ───────────────────────────────
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
