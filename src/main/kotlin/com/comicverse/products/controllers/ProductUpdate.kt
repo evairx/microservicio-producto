@@ -23,20 +23,7 @@ class ProductUpdate {
                 .body(mapOf("error" to "Slug inválido"))
         }
 
-        // 1. Verificar si el producto existe
-        val existing = SupabaseClient.client
-            .from("Products")
-            .select {
-                filter { eq("slug", cleanSlug) }
-            }
-            .decodeList<ProductCheck>()
-
-        if (existing.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(mapOf("error" to "Producto con slug '$cleanSlug' no existe"))
-        }
-
-        // 2. Actualizar el producto
+        // 1. Actualizar el producto directamente
         try {
             val updated = SupabaseClient.client
                 .from("Products")
@@ -54,12 +41,19 @@ class ProductUpdate {
                     filter { eq("slug", cleanSlug) }
                     select()
                 }
+                .decodeList<Product>()
+            
+            // Si no se actualizó nada, el producto no existe
+            if (updated.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(mapOf("error" to "Producto con slug '$cleanSlug' no existe"))
+            }
 
             return ResponseEntity.ok(
                 mapOf(
                     "success" to true,
                     "message" to "Producto actualizado correctamente",
-                    "product" to updated.data
+                    "product" to updated.first()
                 )
             )
 
@@ -84,8 +78,17 @@ data class ProductUpdateRequest(
 )
 
 @Serializable
-data class ProductCheck(
-    val slug: String
+data class Product(
+    val title: String? = null,
+    val price: Int? = null,
+    val price_offer: Int? = null,
+    val image: String? = null,
+    val description: String? = null,
+    val rating: Rating? = null,
+    val stock: Int? = null,
+    val category: String? = null,
+    val home: Boolean? = null,
+    val slug: String? = null
 )
 
 @Serializable
