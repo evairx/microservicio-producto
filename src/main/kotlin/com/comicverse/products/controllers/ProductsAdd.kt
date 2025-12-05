@@ -1,11 +1,12 @@
 package com.comicverse.products.controllers
 
 import com.comicverse.products.SupabaseClient
+import com.comicverse.products.models.Product
+import com.comicverse.products.models.Rating
 import io.github.jan.supabase.postgrest.from
 import kotlinx.serialization.Serializable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 @RequestMapping("/add")
@@ -56,21 +57,6 @@ class ProductsAdd {
 }
 
 // ------------------- DTO -------------------
-
-@Serializable
-data class Product(
-    val id: Int? = null,
-    val title: String? = null,
-    val price: Int? = null,
-    val price_offer: Int? = null,
-    val image: String? = null,
-    val description: String? = null,
-    val rating: Rating? = null,
-    val stock: Int? = null,
-    val category: String? = null,
-    val home: Boolean? = null,
-    val slug: String? = null
-)
 
 @Serializable
 data class ProductAddRequest(

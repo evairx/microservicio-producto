@@ -1,8 +1,8 @@
 package com.comicverse.products.controllers
 
 import com.comicverse.products.SupabaseClient
+import com.comicverse.products.models.Product
 import io.github.jan.supabase.postgrest.from
-import kotlinx.serialization.Serializable
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -19,24 +19,3 @@ class ProductsGet {
             .decodeList<Product>()
     }
 }
-
-@Serializable
-data class Product(
-    val id: Int? = null,
-    val title: String? = null,
-    val price: Int? = null,
-    val price_offer: Int? = null,
-    val image: String? = null,
-    val description: String? = null,
-    val rating: Rating? = null,
-    val stock: Int? = null,
-    val category: String? = null,
-    val home: Boolean? = null,
-    val slug: String? = null
-)
-
-@Serializable
-data class Rating(
-    val rate: Double? = null,
-    val count: Int? = null
-)
