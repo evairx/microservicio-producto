@@ -79,6 +79,7 @@ data class ProductUpdateRequest(
 
 @Serializable
 data class Product(
+    val id: Int? = null,
     val title: String? = null,
     val price: Int? = null,
     val price_offer: Int? = null,
